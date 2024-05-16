@@ -19,3 +19,9 @@ jobs:
 
     - name: Run Python script
       run: python main.py
+
+    - name: Archive result as artifact
+      uses: actions/upload-artifact@v2
+      with:
+        name: report
+        path: result.txt
