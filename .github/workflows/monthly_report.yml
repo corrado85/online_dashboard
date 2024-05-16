@@ -14,12 +14,12 @@ jobs:
       uses: actions/checkout@v4  # Aggiorna l'azione a Node.js 20
 
     - name: Set up Python
-      uses: actions/setup-python@v3  # Aggiorna l'azione a Node.js 20
+      uses: actions/setup-python@v4  # Aggiorna l'azione a Node.js 20
       with:
         python-version: '3.x'
 
     - name: Run script
-      run: python generate_report.py
+      run: python main.py
 
     - name: Commit and push changes
       run: |
