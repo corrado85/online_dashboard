@@ -1,0 +1,31 @@
+name: Monthly Report
+
+on:
+  schedule:
+    - cron: "0 0 1 * *"  # Esegue il primo giorno di ogni mese a mezzanotte UTC
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.x'
+
+    - name: Run script
+      run: python generate_report.py
+
+    - name: Commit and push changes
+      run: |
+        git config --global user.name 'github-actions[bot]'
+        git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+        git checkout -b gh-pages
+        mv report.txt index.html
+        git add index.html
+        git commit -m 'Aggiornamento report mensile'
+        git push --force --set-upstream origin gh-pages
