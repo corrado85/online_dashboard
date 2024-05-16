@@ -11,7 +11,7 @@ jobs:
 
     steps:
     - name: Checkout repository
-      uses: actions/checkout@v3  # Aggiorna l'azione a Node.js 20
+      uses: actions/checkout@v4  # Aggiorna l'azione a Node.js 20
 
     - name: Set up Python
       uses: actions/setup-python@v3  # Aggiorna l'azione a Node.js 20
@@ -19,7 +19,7 @@ jobs:
         python-version: '3.x'
 
     - name: Run script
-      run: python main.py
+      run: python generate_report.py
 
     - name: Commit and push changes
       run: |
