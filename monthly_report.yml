@@ -3,22 +3,31 @@ name: Monthly Report
 on:
   schedule:
     - cron: "0 0 1 * *"  # Esegue il primo giorno di ogni mese a mezzanotte UTC
+  workflow_dispatch:  # Permette l'esecuzione manuale del workflow
 
 jobs:
-  build:
+  generate_report:
     runs-on: ubuntu-latest
-
     steps:
     - name: Checkout repository
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3  # Aggiornato a Node.js 20
 
-    - name: Set up Python
-      uses: actions/setup-python@v2
+    - name: Set up Python 3.x
+      uses: actions/setup-python@v3  # Aggiornato a Node.js 20
       with:
         python-version: '3.x'
 
-    - name: Install dependencies
-      run: pip install -r requirements.txt
+    - name: Run Python script
+      run: python main.py
 
-    - name: Run script
-      run: python your_script.py
+    - name: Create HTML from result.txt
+      run: |
+        echo "<html><body><pre>" > index.html
+        cat result.txt >> index.html
+        echo "</pre></body></html>" >> index.html
+
+    - name: Publish to GitHub Pages
+      uses: peaceiris/actions-gh-pages@v3
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: .  # Pubblica l'intero repository come GitHub Pages
