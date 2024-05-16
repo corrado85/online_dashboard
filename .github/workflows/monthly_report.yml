@@ -20,8 +20,8 @@ jobs:
     - name: Run Python script
       run: python main.py
 
-    - name: Archive result as artifact
-      uses: actions/upload-artifact@v2
+    - name: Publish to GitHub Pages
+      uses: peaceiris/actions-gh-pages@v3
       with:
-        name: report
-        path: result.txt
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: .  # Pubblica l'intero repository come GitHub Pages
