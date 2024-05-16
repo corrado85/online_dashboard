@@ -11,12 +11,12 @@ jobs:
 
     steps:
     - name: Checkout repository
-      uses: actions/checkout@v3  # Aggiorna alla versione 3
+      uses: actions/checkout@v3
+      with:
+        node-version: '20.x'  # Specifica esplicitamente la versione di Node.js
 
     - name: Set up Python
-      uses: actions/setup-python@v4  # Aggiorna alla versione 4
-      with:
-        python-version: '3.x'
+      uses: actions/setup-python@v4
 
     - name: Run script
       run: python generate_report.py
