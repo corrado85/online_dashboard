@@ -19,3 +19,15 @@ jobs:
 
     - name: Run Python script
       run: python main.py
+
+    - name: Create public directory
+      run: mkdir public
+
+    - name: Move report to public directory
+      run: mv report.txt public/index.html
+
+    - name: Publish to GitHub Pages
+      uses: peaceiris/actions-gh-pages@v4  # Aggiornato a Node.js 20
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: public  # Pubblica solo la directory 'public'
