@@ -1,19 +1,16 @@
-name: Run Data Collection and Analysis
+name: Monthly Report
 
 on:
   schedule:
-    # Esegue il workflow il primo giorno di ogni mese alle 00:00 UTC
-    - cron: "0 0 1 * *"
+    - cron: "0 0 1 * *"  # Esegue il primo giorno di ogni mese a mezzanotte UTC
   workflow_dispatch:  # Permette l'esecuzione manuale del workflow
 
-
 jobs:
-  run-script:
+  generate_report:
     runs-on: ubuntu-latest
-
     steps:
     - name: Checkout repository
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3
 
     - name: Set up Python
       uses: actions/setup-python@v2
@@ -21,7 +18,10 @@ jobs:
         python-version: '3.x'
 
     - name: Install dependencies
-      run: pip install yfinance pandas tqdm
+      run: |
+        pip install seaborn yahoo_fin numpy matplotlib tqdm pandas holidays gdown scikit-learn
+        pip install google-colab  # Se necessario
 
     - name: Run Python script
       run: python main.py
+
