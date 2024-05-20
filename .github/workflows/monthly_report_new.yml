@@ -19,9 +19,7 @@ jobs:
 
     - name: Install dependencies
       run: |
-        pip install seaborn yahoo_fin numpy matplotlib tqdm pandas holidays gdown scikit-learn
-        pip install google-colab  # Se necessario
+        pip install -r https://raw.githubusercontent.com/tuonomeutente/tuorepository/main/requirements.txt
 
     - name: Run Python script
       run: python main.py
-
