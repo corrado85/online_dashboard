@@ -19,7 +19,7 @@ jobs:
 
     - name: Install dependencies
       run: |
-        pip install -r https://raw.githubusercontent.com/tuonomeutente/tuorepository/main/requirements.txt
+        pip install -r https://raw.githubusercontent.com/corrado85/online_dashboard/main/requirements.txt
 
     - name: Run Python script
       run: python main.py
