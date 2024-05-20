@@ -1,3 +1,4 @@
+
 name: Monthly Report New
 
 on:
@@ -18,7 +19,8 @@ jobs:
         python-version: '3.x'
 
     - name: Install dependencies
-      run: |
+      run: 
+        pip install --upgrade pip setuptools
         pip install -r https://raw.githubusercontent.com/corrado85/online_dashboard/main/requirements.txt
 
     - name: Run Python script
