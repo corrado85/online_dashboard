@@ -22,4 +22,4 @@ jobs:
       run: pip install yfinance pandas tqdm
 
     - name: Run Python script
-      run: python your_script.py
+      run: python main.py
