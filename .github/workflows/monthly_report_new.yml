@@ -1,27 +1,44 @@
-
-name: Monthly Report New
+name: Generate Current Time Page
 
 on:
-  schedule:
-    - cron: "0 0 1 * *"  # Esegue il primo giorno di ogni mese a mezzanotte UTC
-  workflow_dispatch:  # Permette l'esecuzione manuale del workflow
+  push:
+    branches:
+      - main
 
 jobs:
-  generate_report:
+  build:
     runs-on: ubuntu-latest
+
     steps:
     - name: Checkout repository
-      uses: actions/checkout@v3
+      uses: actions/checkout@v2
 
     - name: Set up Python
       uses: actions/setup-python@v2
       with:
         python-version: '3.x'
 
-    - name: Install dependencies
-      run: 
-        pip install --upgrade pip setuptools
-        pip install -r https://raw.githubusercontent.com/corrado85/online_dashboard/main/requirements.txt
+    - name: Run Python script and capture output
+      id: run_script
+      run: |
+        current_time=$(python main.py)
+        echo "::set-output name=current_time::$current_time"
 
-    - name: Run Python script
-      run: python main.py
+    - name: Generate HTML file
+      run: |
+        echo "<!DOCTYPE html>" > index.html
+        echo "<html>" >> index.html
+        echo "<head>" >> index.html
+        echo "<title>Current Time</title>" >> index.html
+        echo "</head>" >> index.html
+        echo "<body>" >> index.html
+        echo "<h1>Current Time</h1>" >> index.html
+        echo "<p>${{ steps.run_script.outputs.current_time }}</p>" >> index.html
+        echo "</body>" >> index.html
+        echo "</html>" >> index.html
+
+    - name: Deploy to GitHub Pages
+      uses: peaceiris/actions-gh-pages@v3
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: ./
